@@ -12,34 +12,17 @@ mandelbrot(Width, Height, X, Y, K, Depth) ->
 
 
 rows(Width, Height, Trans, Depth, List) ->
-  case Height of
-    0 ->
-      case Width of
-        0 ->
-          Pixel = Trans(Width, Height),
-          Brot = brot:mandelbrot(Pixel, Depth),
-          Color = color:convert(Brot, Depth),
-          [Color | List];
-        _Val ->
-          Pixel = Trans(Width, Height),
-          Brot = brot:mandelbrot(Pixel, Depth),
-          Color = color:convert(Brot, Depth),
-          rows(Width - 1, Height, Trans, Depth, [Color | List])
-      end;
-    _Val1 ->
-      case Width of
-        0 ->
-          Pixel = Trans(Width, Height),
-          Brot = brot:mandelbrot(Pixel, Depth),
-          Color = color:convert(Brot, Depth),
-          rows(960, Height - 1, Trans, Depth, [Color | List]);
-        _Val2 ->
-          Pixel = Trans(Width, Height),
-          Brot = brot:mandelbrot(Pixel, Depth),
-          Color = color:convert(Brot, Depth),
-          rows(Width - 1, Height, Trans, Depth, [Color | List])
-      end
-  end.
+  rows(Width, Height, 0, 0, Trans, Depth, [], List).
+
+rows(Width, Height, CurX, CurY, Trans, Depth, Row, List) ->
+%  for(CurY = 0; CurY < Height; CurY++)
+%      for(CurX = 0; CurX < Height; CurX++)
+%         Complex = Trans(CurX, CurY);
+%         CurDepth = brot:mandelbrot(Complex, Depth)
+%         Colour = color:convert(CurDepth, Depth)
+%         lists:append(Row, Color);
+%      lists:append(List, Row)
+%  return completeList.
 
 demo() ->
   small(-2.6, 1.2, 1.6).
