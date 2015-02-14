@@ -17,7 +17,7 @@ rows(Width, Height, Trans, Depth, ImageData) ->
 rows(_Width, Height, CurY, _Trans, _Depth, ImageData) when CurY == Height ->
   ImageData;
 rows(Width, Height, CurY, Trans, Depth, ImageData) ->
-  Row = calc_row(Width, CurY, 0, Trans, Depth, []),
+  Row = calc_row(Width, 0, CurY, Trans, Depth, []),
   NewImageData = lists:append(ImageData, Row),
   rows(Width, Height, CurY + 1, Trans, Depth, NewImageData).
 
