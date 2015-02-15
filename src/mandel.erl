@@ -30,7 +30,8 @@ calc_row(Width, CurX, CurY, Trans, Depth, RowData) ->
 
 
 demo() ->
-  small(-2.6, 1.2, 1.6).
+  %small(-2.6, 1.2, 1.6),
+  large(-0.14, 0.85, -0.13).
 
 small(X, Y, X1) ->
   Width = 960,
@@ -42,6 +43,17 @@ small(X, Y, X1) ->
   T = timer:now_diff(now(), T0),
   io:format("Picture generated in ~w ms~n", [T div 1000]),
   ppm:write("small.ppm", Image).
+
+large(X, Y, X1) ->
+  Width = 1920,
+  Height = 1080,
+  K = (X1 - X) / Width,
+  Depth = 128,
+  T0 = now(),
+  Image = mandelbrot(Width, Height, X, Y, K, Depth),
+  T = timer:now_diff(now(), T0),
+  io:format("Picture generated in ~w ms~n", [T div 1000]),
+  ppm:write("large.ppm", Image).
 
 
 %  for(CurY = 0; CurY < Height; CurY++)
