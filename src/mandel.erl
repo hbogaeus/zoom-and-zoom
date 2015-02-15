@@ -12,22 +12,21 @@ mandelbrot(Width, Height, X, Y, K, Depth) ->
 
 
 rows(Width, Height, Trans, Depth, ImageData) ->
-  rows(Width, Height, 0, Trans, Depth, ImageData).
+  rows(Width, Height, Height, Trans, Depth, ImageData).
 
-rows(_Width, Height, CurY, _Trans, _Depth, ImageData) when CurY == Height ->
+rows(_Width, _Height, CurY, _Trans, _Depth, ImageData) when CurY == 0 ->
   ImageData;
 rows(Width, Height, CurY, Trans, Depth, ImageData) ->
-  Row = calc_row(Width, 0, CurY, Trans, Depth, []),
-  NewImageData = lists:append(ImageData, Row),
-  rows(Width, Height, CurY + 1, Trans, Depth, NewImageData).
+  Row = calc_row(Width, Width, CurY, Trans, Depth, []),
+  rows(Width, Height, CurY - 1, Trans, Depth, [Row | ImageData]).
 
-calc_row(Width, CurX, _CurY, _Trans, _Depth, RowData) when CurX == Width ->
-  [RowData];
+calc_row(_Width, CurX, _CurY, _Trans, _Depth, RowData) when CurX == 0 ->
+  RowData;
 calc_row(Width, CurX, CurY, Trans, Depth, RowData) ->
   Complex = Trans(CurX, CurY),
   CurDepth = brot:mandelbrot(Complex, Depth),
   Color = color:convert(CurDepth, Depth),
-  calc_row(Width, CurX + 1, CurY, Trans, Depth, [Color | RowData]).
+  calc_row(Width, CurX - 1, CurY, Trans, Depth, [Color | RowData]).
 
 
 demo() ->
